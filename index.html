@@ -51,7 +51,7 @@ dbPromise.then(function(db) {
 }).then(function() {
   alert('item updated!');
 }); 
-  
+/*
 dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readwrite');
   var store = tx.objectStore('store');
@@ -67,9 +67,9 @@ dbPromise.then(function(db) {
   return store.getAll();
 }).then(function(items) {
   alert('Items by name:', items);
-}); 
+}); */ 
   
-dbPromise.then(function(db) {
+/* dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readonly');
   var store = tx.objectStore('store');
   return store.openCursor();
@@ -136,7 +136,7 @@ var dbPromise = idb.open('test-db7', 3, function(upgradeDb) {
       var storeOS = upgradeDb.transaction.objectStore('store');
       storeOS.createIndex('description', 'description');
   }
-}); 
+}); */ 
   
 
   
