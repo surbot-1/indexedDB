@@ -56,12 +56,12 @@ request.onupgradeneeded = event => {
 }; 
   
 var transaction2 = db.transaction(["customers"]);
-var objectStore2 = transaction.objectStore("customers");
-var request2 = objectStore.get("444-44-4444");
+var objectStore2 = transaction2.objectStore("customers");
+var request2 = objectStore2.get("444-44-4444");
 request2.onerror = event => {
  alert('error');  // Handle errors!
 };
-request.onsuccess = event => {
+request2.onsuccess = event => {
   // Do something with the request.result!
   alert("Name for SSN 444-44-4444 is " + request2.result.name);
 };
