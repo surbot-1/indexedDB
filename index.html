@@ -10,9 +10,142 @@
     <script src="function.js"></script>
     
     
+<script> 
+  
+  alert('1'); 
+  
+  dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readwrite');
+  var store = tx.objectStore('store');
+  var item = {
+    name: 'sandwich',
+    price: 4.99,
+    description: 'A very tasty sandwich',
+    created: new Date().getTime()
+  };
+  store.add(item);
+  return tx.complete;
+}).then(function() {
+  console.log('added item to the store os!');
+}); 
+  
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readonly');
+  var store = tx.objectStore('store');
+  return store.get('sandwich');
+}).then(function(val) {
+  console.dir(val);
+}); 
+  
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readwrite');
+  var store = tx.objectStore('store');
+  var item = {
+    name: 'sandwich',
+    price: 99.99,
+    description: 'A very tasty, but quite expensive, sandwich',
+    created: new Date().getTime()
+  };
+  store.put(item);
+  return tx.complete;
+}).then(function() {
+  console.log('item updated!');
+}); 
+  
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readwrite');
+  var store = tx.objectStore('store');
+  store.delete(key);
+  return tx.complete;
+}).then(function() {
+  console.log('Item deleted');
+}); 
+  
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readonly');
+  var store = tx.objectStore('store');
+  return store.getAll();
+}).then(function(items) {
+  console.log('Items by name:', items);
+}); 
+  
+dbPromise.then(function(db) {
+  var tx = db.transaction('store', 'readonly');
+  var store = tx.objectStore('store');
+  return store.openCursor();
+}).then(function logItems(cursor) {
+  if (!cursor) {
+    return;
+  }
+  console.log('Cursored at:', cursor.key);
+  for (var field in cursor.value) {
+    console.log(cursor.value[field]);
+  }
+  return cursor.continue().then(logItems);
+}).then(function() {
+  console.log('Done cursoring');
+}); 
+  
+function searchItems(lower, upper) {
+  if (lower === '' && upper === '') {return;}
+
+  var range;
+  if (lower !== '' && upper !== '') {
+    range = IDBKeyRange.bound(lower, upper);
+  } else if (lower === '') {
+    range = IDBKeyRange.upperBound(upper);
+  } else {
+    range = IDBKeyRange.lowerBound(lower);
+  }
+
+  dbPromise.then(function(db) {
+    var tx = db.transaction(['store'], 'readonly');
+    var store = tx.objectStore('store');
+    var index = store.index('price');
+    return index.openCursor(range);
+  }).then(function showRange(cursor) {
+    if (!cursor) {return;}
+    console.log('Cursored at:', cursor.key);
+    for (var field in cursor.value) {
+      console.log(cursor.value[field]);
+    }
+    return cursor.continue().then(showRange);
+  }).then(function() {
+    console.log('Done cursoring');
+  });
+} 
+  
+var dbPromise = idb.open('test-db7', 2, function(upgradeDb) {
+  switch (upgradeDb.oldVersion) {
+    case 0:
+      upgradeDb.createObjectStore('store', {keyPath: 'name'});
+    case 1:
+      var peopleStore = upgradeDb.transaction.objectStore('store');
+      peopleStore.createIndex('price', 'price');
+  }
+}); 
+  
+var dbPromise = idb.open('test-db7', 3, function(upgradeDb) {
+  switch (upgradeDb.oldVersion) {
+    case 0:
+      upgradeDb.createObjectStore('store', {keyPath: 'name'});
+    case 1:
+      var storeOS = upgradeDb.transaction.objectStore('store');
+      storeOS.createIndex('price', 'price');
+    case 2:
+      var storeOS = upgradeDb.transaction.objectStore('store');
+      storeOS.createIndex('description', 'description');
+  }
+}); 
+  
+
+  
+</script> 
+    
+    
 <script>
       
-      alert('2'); 
+/* alert('2'); 
       
 var db;
 
@@ -54,7 +187,7 @@ function addItem() {
   request.onsuccess = function(e) {
     alert('Woot! Did it');
   };
-}
+} */ 
       
 </script> 
   
