@@ -26,7 +26,7 @@
   store.add(item);
   return tx.complete;
 }).then(function() {
-  console.log('added item to the store os!');
+  alert('added item to the store os!');
 }); 
   
 dbPromise.then(function(db) {
@@ -34,7 +34,7 @@ dbPromise.then(function(db) {
   var store = tx.objectStore('store');
   return store.get('sandwich');
 }).then(function(val) {
-  console.dir(val);
+  alert(val); // console.dir(val);
 }); 
   
 dbPromise.then(function(db) {
@@ -49,7 +49,7 @@ dbPromise.then(function(db) {
   store.put(item);
   return tx.complete;
 }).then(function() {
-  console.log('item updated!');
+  alert('item updated!');
 }); 
   
 dbPromise.then(function(db) {
@@ -58,7 +58,7 @@ dbPromise.then(function(db) {
   store.delete(key);
   return tx.complete;
 }).then(function() {
-  console.log('Item deleted');
+  alert('Item deleted');
 }); 
   
 dbPromise.then(function(db) {
@@ -66,7 +66,7 @@ dbPromise.then(function(db) {
   var store = tx.objectStore('store');
   return store.getAll();
 }).then(function(items) {
-  console.log('Items by name:', items);
+  alert('Items by name:', items);
 }); 
   
 dbPromise.then(function(db) {
@@ -77,13 +77,13 @@ dbPromise.then(function(db) {
   if (!cursor) {
     return;
   }
-  console.log('Cursored at:', cursor.key);
+  alert('Cursored at:', cursor.key);
   for (var field in cursor.value) {
-    console.log(cursor.value[field]);
+    alert(cursor.value[field]);
   }
   return cursor.continue().then(logItems);
 }).then(function() {
-  console.log('Done cursoring');
+  alert('Done cursoring');
 }); 
   
 function searchItems(lower, upper) {
@@ -105,13 +105,13 @@ function searchItems(lower, upper) {
     return index.openCursor(range);
   }).then(function showRange(cursor) {
     if (!cursor) {return;}
-    console.log('Cursored at:', cursor.key);
+    alert('Cursored at:', cursor.key);
     for (var field in cursor.value) {
-      console.log(cursor.value[field]);
+      alert(cursor.value[field]);
     }
     return cursor.continue().then(showRange);
   }).then(function() {
-    console.log('Done cursoring');
+    alert('Done cursoring');
   });
 } 
   
