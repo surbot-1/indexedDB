@@ -21,9 +21,9 @@
   if (!('indexedDB' in window)) {
     alert('This browser doesn\'t support IndexedDB');
     return;
-  }
+  } else {alert('Ok');}
 
-  var dbPromise = idb.open('db', 1, function(upgradeDb) {
+  var dbPromise = idb.open('db2', 1, function(upgradeDb) {
     alert('making a new object store');
     if (!upgradeDb.objectStoreNames.contains('store')) {
       upgradeDb.createObjectStore('store');
@@ -47,7 +47,7 @@
   alert('added item to the store os!');
 }); 
   
-dbPromise.then(function(db) {
+/* dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readonly');
   var store = tx.objectStore('store');
   return store.get('sandwich');
@@ -68,9 +68,9 @@ dbPromise.then(function(db) {
   return tx.complete;
 }).then(function() {
   alert('item updated!');
-}); 
-/*
-dbPromise.then(function(db) {
+}); */ 
+
+/* dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readwrite');
   var store = tx.objectStore('store');
   store.delete(key);
