@@ -20,7 +20,7 @@ const customerData = [
 ]; 
   
 const dbName = "the_name"; 
-var db; 
+// var db; 
 
 var request = indexedDB.open(dbName, 2);
 
@@ -28,7 +28,7 @@ request.onerror = event => {
   // Handle errors.
 };
 request.onupgradeneeded = event => {
-  db = event.target.result;
+  var db = event.target.result;
 
   // Create an objectStore to hold information about our customers. We're
   // going to use "ssn" as our key path because it's guaranteed to be
