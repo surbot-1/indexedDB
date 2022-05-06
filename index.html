@@ -14,8 +14,10 @@
   
   alert('1'); 
   
+  var dbPromise; 
+  
   (function() {
-  'use strict';
+  // 'use strict';
 
   //check for support
   if (!('indexedDB' in window)) {
@@ -23,7 +25,7 @@
     return;
   } else {alert('Ok');}
 
-  var dbPromise = idb.open('db2', 1, function(upgradeDb) {
+  dbPromise = idb.open('db', 1, function(upgradeDb) {
     alert('making a new object store');
     if (!upgradeDb.objectStoreNames.contains('store')) {
       upgradeDb.createObjectStore('store');
