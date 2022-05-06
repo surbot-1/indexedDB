@@ -14,7 +14,7 @@
   
   alert('1'); 
   
-  var dbPromise; 
+  // var dbPromise; 
   
   (function() {
   // 'use strict';
@@ -25,14 +25,14 @@
     return;
   } else {alert('Ok');}
 
-  dbPromise = idb.open('db', 1, function(upgradeDb) {
+  var dbPromise = idb.open('db', 1, function(upgradeDb) {
     alert('making a new object store');
     if (!upgradeDb.objectStoreNames.contains('store')) {
       upgradeDb.createObjectStore('store');
     }
   });
 
-})();
+// })();
   
   dbPromise.then(function(db) {
   var tx = db.transaction('store', 'readwrite');
@@ -158,7 +158,7 @@ var dbPromise = idb.open('test-db7', 3, function(upgradeDb) {
   }
 }); */ 
   
-
+})(); 
   
 </script> 
     
